@@ -648,9 +648,13 @@ class HybridEnsembleAggregator:
         grouped_results = defaultdict(list)
 
         for res in self.trial_results:
-            parts = res['id'].split('_')
-            if len(parts) >= 4:
-                eng_mode = parts[3] # DERIVATIVE or L2_NORMALIZED
+            trial_id = res["id"]
+
+            # L2_NORMALIZEDを先に判定し、アンダースコアによる分割を回避
+            if "L2_NORMALIZED" in trial_id:
+                eng_mode = "L2_NORMALIZED"
+            elif "DERIVATIVE" in trial_id:
+                eng_mode = "DERIVATIVE"
             else:
                 eng_mode = "Unknown"
 
