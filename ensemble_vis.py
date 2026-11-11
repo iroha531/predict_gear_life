@@ -76,7 +76,7 @@ PLOT = {
 }
 
 # 可視化の対象とする損傷回数の範囲 [万回] (両端を含む)
-TARGET_RANGE_MAN = (200, 800)
+TARGET_RANGE_MAN = (400, 800)
 
 
 def _in_target_range(value):
@@ -304,7 +304,9 @@ def plot_prediction_boxplot(root_dir):
     ax.set_title("Predicted Damage Count Distribution by Target", fontsize=PLOT["title_fontsize"])
     ax.set_xlabel("Target damage count [万回]", fontsize=PLOT["axis_label_fontsize"])
     ax.set_ylabel("Predicted damage count [cycles]", fontsize=PLOT["axis_label_fontsize"])
+    ax.set_ylim(bottom=0) # 上限も設定したいとき、ax.set_ylim(0, 9_000_000)のようにする
     ax.yaxis.set_major_formatter(plt.FuncFormatter(lambda y, _: f"{y:,.0f}"))
+
     ax.grid(axis="y", alpha=0.25)
     ax.legend(fontsize=PLOT["legend_fontsize"], frameon=False)
     _font_config(ax)
